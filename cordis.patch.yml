@@ -15,5 +15,5 @@
 # layouts.
 - insert:
     - id: dsh-skill-literature-download
-      name: '@zmnzmnzmn/dsh-skill-literature-download'
+      name: '@zmnzmnzmn/dsh-skill-literature-fetch'
       config: {}
