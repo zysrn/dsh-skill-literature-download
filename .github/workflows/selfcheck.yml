@@ -1,0 +1,77 @@
+name: selfcheck
+
+# Gates the plugin package: the manifest must be installable, the bundle patch
+# must name this package, and the bundled skill must still pass its own
+# credential and encoding checks. The skill's self-check is reused rather than
+# duplicated so a rule is enforced in exactly one place.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  package:
+    name: Package self-check (${{ matrix.os }} / py${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.9", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      # Runs before any byte-compile step: the skill's check [4] flags
+      # __pycache__ as junk, so compiling first would report a false failure.
+      - name: Run bundled skill self-check
+        run: python skills/literature-download-automation/scripts/selfcheck.py
+
+      - name: Validate package.json
+        run: node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json OK')"
+
+      - name: Check the plugin module parses
+        run: node --check lib/index.js
+
+      # Installs the declared peers for real: importing the module is what
+      # proves the peer ranges resolve, which is the failure a user would hit.
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Mount the plugin and assert the served catalog
+        run: npm test
+
+      # Parse the patch with a YAML parser rather than a regex, so a malformed
+      # patch fails here instead of at profile boot for a user.
+      - name: Check the bundle patch mounts this package
+        run: |
+          node --input-type=module -e "
+          import { readFileSync } from 'node:fs';
+          import { parse } from 'yaml';
+          const pkg = JSON.parse(readFileSync('package.json','utf8'));
+          const patch = parse(readFileSync(pkg.dsh.bundle.patch,'utf8'));
+          const row = patch.find(e => e.insert)?.insert[0];
+          if (!row) { console.error('no insert row in bundle patch'); process.exit(1); }
+          if (row.name !== pkg.name) {
+            console.error('patch row name', row.name, '!= package name', pkg.name);
+            process.exit(1);
+          }
+          console.log('bundle patch OK ->', row.name);
+          "
+
+      - name: Byte-compile skill scripts
+        run: python -m compileall -q skills
+
+      - name: Clean up bytecode from compileall
+        if: always()
+        run: python -c "import shutil,pathlib;[shutil.rmtree(p,ignore_errors=True) for p in pathlib.Path('.').rglob('__pycache__')]"
