@@ -1,0 +1,19 @@
+# dsh-skill-literature-download bundle patch.
+#
+# One insert row mounting this package's skill provider into the host
+# composition of a dsh profile. `name` must be the npm package name so node
+# module resolution finds the installed package (the same convention
+# dsh-zotero / dsh-group-room / dsh-chatops use).
+#
+# The row id is the package name to keep one plugin == one row, which makes the
+# row addressable from a profile's own cordis.patch.yml if a deployment ever
+# needs to disable or re-point it.
+#
+# Config stays empty: the plugin has no deployment-tunable fields. The bundled
+# skill directory is derived from the package's own location at runtime, so a
+# user never edits a path here — that would break under npm's nested install
+# layouts.
+- insert:
+    - id: dsh-skill-literature-download
+      name: '@zysrn/dsh-skill-literature-download'
+      config: {}
