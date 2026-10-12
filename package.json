@@ -1,6 +1,6 @@
 {
-  "name": "@zmnzmnzmn/dsh-skill-literature-download",
-  "version": "0.1.0",
+  "name": "@zmnzmnzmn/dsh-skill-literature-fetch",
+  "version": "0.1.1",
   "description": "DSH skill: batch-download full-text PDFs for a list of DOIs/titles through a real browser, using the user's own institutional access (CARSI / campus SSO / VPN) plus open-access routes. Packaged as an installable dsh bundle so the skill reaches every agent without copying files into ~/.dsh/skills.",
   "keywords": [
     "dsh",
