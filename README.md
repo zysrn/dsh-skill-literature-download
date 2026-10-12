@@ -1,4 +1,4 @@
-# @zysrn/dsh-skill-literature-download
+# @zmnzmnzmn/dsh-skill-literature-download
 
 A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that packages the
 **`literature-download-automation`** skill as an installable dsh bundle.
@@ -19,7 +19,7 @@ with no manual file placement.
 ## Install
 
 ```bash
-dsh plugin --profile web add @zysrn/dsh-skill-literature-download
+dsh plugin --profile web add @zmnzmnzmn/dsh-skill-literature-download
 ```
 
 Then register the bundle so its patch layer is applied — add it to `dsh.profile.bundles` in the
@@ -32,7 +32,7 @@ profile's `package.json`:
       "bundles": [
         "@deepseek-ai/dsh-base",
         "@deepseek-ai/dsh-web-app",
-        "@zysrn/dsh-skill-literature-download"
+        "@zmnzmnzmn/dsh-skill-literature-download"
       ]
     }
   }
@@ -63,7 +63,7 @@ Check that the plugin's row reached the composed profile tree:
 dsh --profile web --dump-config | grep dsh-skill-literature-download
 ```
 
-The row appears as an `insert` entry named `@zysrn/dsh-skill-literature-download`. Then ask the agent
+The row appears as an `insert` entry named `@zmnzmnzmn/dsh-skill-literature-download`. Then ask the agent
 to download a paper — the skill lists as `literature-download-automation` in its catalog.
 
 ## What the skill does
