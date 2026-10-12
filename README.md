@@ -1,10 +1,18 @@
-# @zmnzmnzmn/dsh-skill-literature-download
+# @zmnzmnzmn/dsh-skill-literature-fetch
 
 A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that packages the
 **`literature-download-automation`** skill as an installable dsh bundle.
 
 Batch-download full-text PDFs for a list of DOIs or titles through a real browser, using your own
 institutional access (CARSI / 校园统一身份认证 / VPN) plus open-access routes.
+
+> **Why the package name says `fetch` but everything else says `download`**
+>
+> npm's registry rejects any package name containing `download` with
+> *"That word is not allowed"*, so the published name had to differ from the skill's. The skill
+> keeps its name (`literature-download-automation`), the plugin row id keeps its id
+> (`dsh-skill-literature-download`), and the repository keeps its name — only the npm identifier
+> changed. `dsh plugin` resolves the row through `package.json`, so the difference is cosmetic.
 
 ## Why this plugin exists
 
@@ -19,7 +27,7 @@ with no manual file placement.
 ## Install
 
 ```bash
-dsh plugin --profile web add @zmnzmnzmn/dsh-skill-literature-download
+dsh plugin --profile web add @zmnzmnzmn/dsh-skill-literature-fetch
 ```
 
 Then register the bundle so its patch layer is applied — add it to `dsh.profile.bundles` in the
@@ -32,7 +40,7 @@ profile's `package.json`:
       "bundles": [
         "@deepseek-ai/dsh-base",
         "@deepseek-ai/dsh-web-app",
-        "@zmnzmnzmn/dsh-skill-literature-download"
+        "@zmnzmnzmn/dsh-skill-literature-fetch"
       ]
     }
   }
@@ -63,7 +71,7 @@ Check that the plugin's row reached the composed profile tree:
 dsh --profile web --dump-config | grep dsh-skill-literature-download
 ```
 
-The row appears as an `insert` entry named `@zmnzmnzmn/dsh-skill-literature-download`. Then ask the agent
+The row appears as an `insert` entry named `@zmnzmnzmn/dsh-skill-literature-fetch`. Then ask the agent
 to download a paper — the skill lists as `literature-download-automation` in its catalog.
 
 ## What the skill does
