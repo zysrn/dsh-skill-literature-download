@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local job files and downloaded output (never commit your own papers)
+job.json
+out/
+downloads/
+*.pdf
+*.crdownload
+
+# Browser profiles created by launch_edge.ps1
+.dsh-browser-profile/
+browser-profile/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Secrets — never commit these
+.env
+*.token
+credentials.json
+
+# ── plugin package ──────────────────────────────────────────────────────────
+# Dependencies are resolved fresh on install; a committed tree would only bloat
+# the tarball and mask a broken peer range.
+node_modules/
+.pnpm-store/
+
+# No lockfile is published, and the CI install resolves deliberately fresh so a
+# stale lock cannot hide a peer-range break.
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Packaging artifacts
+*.tgz
+dist/
