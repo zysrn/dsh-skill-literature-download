@@ -1,0 +1,73 @@
+{
+  "name": "@zysrn/dsh-skill-literature-download",
+  "version": "0.1.0",
+  "description": "DSH skill: batch-download full-text PDFs for a list of DOIs/titles through a real browser, using the user's own institutional access (CARSI / campus SSO / VPN) plus open-access routes. Packaged as an installable dsh bundle so the skill reaches every agent without copying files into ~/.dsh/skills.",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "dsh-skill",
+    "skill",
+    "literature",
+    "pdf",
+    "doi",
+    "carsi",
+    "open-access"
+  ],
+  "license": "MIT",
+  "author": "zysrn",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "cordis.patch.yml",
+    "skills/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-skill-filesystem": "^0.1.5-rc.3"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-skill-filesystem": {
+      "optional": true
+    },
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zysrn/dsh-skill-literature-download.git"
+  },
+  "homepage": "https://github.com/zysrn/dsh-skill-literature-download#readme",
+  "bugs": {
+    "url": "https://github.com/zysrn/dsh-skill-literature-download/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node test/mount.mjs"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-skill": "^0.1.5-rc.3",
+    "@deepseek-ai/dsh-skill-filesystem": "^0.1.5-rc.3",
+    "yaml": "^2.9.1"
+  }
+}
